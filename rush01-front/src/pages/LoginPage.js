@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import axios from "axios";
 
 const LoginPageStyled = styled.div`
   display: flex;
@@ -28,10 +29,24 @@ const LoginForm = styled.form`
 `;
 
 function LoginPage({ history }) {
+  const onLoginHandler = (e) => {
+    e.preventDefault(); // for no refresh
+    console.log("Login Handler");
+    axios
+      .get("/")
+      .then((response) => {
+        alert("success!");
+        history.push("/join");
+        return response.data;
+      })
+      .catch((error) => {
+        alert("Fail!");
+      });
+  };
   return (
     <LoginPageStyled>
       <LoginForm>
-        <button type="button" onClick={() => history.push("/join")}>
+        <button type="button" onClick={onLoginHandler}>
           Intra Login
         </button>
       </LoginForm>
