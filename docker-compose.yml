@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
       context: ./
     volumes:
-      - .:/app
+      - ./rush01-back:/app
     ports:
       - "4200:4200"
     depends_on: 
@@ -21,7 +21,7 @@ services:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
     volumes:
-      - ./mariadb:/var/lib/mysql # -v 옵션 (다렉토리 마운트 설정)
+      - ./rush01-back/mariadb:/var/lib/mysql # -v 옵션 (다렉토리 마운트 설정)
     ports:
       - "5000:5000"
     cap_add:
