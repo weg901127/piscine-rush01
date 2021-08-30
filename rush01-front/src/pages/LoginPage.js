@@ -28,11 +28,13 @@ margin-top: -200px;
   }
 `;
 
-function LoginPage() {
+function LoginPage({ history }) {
   return (
     <LoginPageStyled>
       <LoginForm>
-        <button type="button">Intra Login</button>
+        <button type="button" onClick={() => history.push("/join")}>
+          Intra Login
+        </button>
       </LoginForm>
     </LoginPageStyled>
   );
