@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import defaultImg from "../assets/img-default.svg";
 
 const JoinPageStyled = styled.div`
   display: flex;
@@ -14,7 +15,7 @@ const JoinPageStyled = styled.div`
     border-radius: 20px;
     padding: 9px 10px;
     font-weight: 600;
-    margin-top: 100px;
+    margin-top: 35px;
     :hover {
       background-color: #343a3f;
       color: #fff;
@@ -23,17 +24,15 @@ const JoinPageStyled = styled.div`
 `;
 
 const JoinForm = styled.form`
-  width: 600px;
-  margin-top: 130px;
+  width: 50vw;
+  min-width: 400px;
+  max-width: 600px;
+  margin-top: 100px;
 `;
 
 JoinForm.Item = styled.div`
   display: flex;
-  align-items: center;
   margin-bottom: 20px;
-  .field_title {
-    width: 150px;
-  }
   input {
     width: 100%;
     height: 35px;
@@ -42,11 +41,23 @@ JoinForm.Item = styled.div`
     box-sizing: border-box;
     border-radius: 5px;
   }
-  .textview {
-    width: calc(100% - 112px);
-  }
   input[type="file"] {
     display: none;
+  }
+`;
+
+JoinForm.Item.Title = styled.div`
+  width: 130px;
+  line-height: 30px;
+`;
+
+JoinForm.Item.Field = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: calc(100% - 130px);
+  position: relative;
+  .textview {
+    width: calc(100% - 110px);
   }
   .file_button {
     margin-left: 10px;
@@ -62,39 +73,72 @@ JoinForm.Item = styled.div`
   }
 `;
 
+JoinForm.Preview = styled.div`
+  border: 1px dashed #ddd;
+  border-radius: 5px;
+  padding: 30px;
+  margin: 0 300px 20px 0;
+  img {
+    top: 60px;
+    left: 5px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+`;
+
 function JoinPage() {
-  const [profile, setProfile] = useState("");
+  const [imgTitle, setImgTitle] = useState("기본 이미지");
+  const [imgPreview, setImgPreview] = useState(defaultImg);
+  const [imgFile, setImgFile] = useState(null);
+
   const handleFileInputChange = (e) => {
-    setProfile(e.target.value);
+    setImgTitle(e.target.files[0].name);
+    setImgFile(e.target.files[0]);
+    let reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onloadend = () => {
+      setImgPreview(reader.result);
+    };
   };
+
   return (
     <JoinPageStyled>
       <JoinForm>
         <JoinForm.Item>
-          <label class="field_title" htmlFor="nickname">
-            닉네임
-          </label>
-          <input
-            type="text"
-            name="nickname"
-            placeholder="닉네임을 입력해주세요. "
-          ></input>
+          <JoinForm.Item.Title>
+            <label htmlFor="nickname">닉네임</label>
+          </JoinForm.Item.Title>
+          <JoinForm.Item.Field>
+            <input
+              type="text"
+              name="nickname"
+              placeholder="닉네임을 입력해주세요. (2글자 이상)"
+            ></input>
+          </JoinForm.Item.Field>
         </JoinForm.Item>
         <JoinForm.Item>
-          <label class="field_title">프로필 이미지</label>
-          <input type="text" value={profile} disabled class="textview" />
-          <label htmlFor="file" class="file_button">
-            파일 찾기
-            <input
-              type="file"
-              id="file"
-              name="profile"
-              onChange={handleFileInputChange}
-            ></input>
-          </label>
+          <JoinForm.Item.Title>
+            <label>프로필 이미지</label>
+          </JoinForm.Item.Title>
+          <JoinForm.Item.Field>
+            <JoinForm.Preview>
+              <img src={imgPreview} alt="profile" />
+            </JoinForm.Preview>
+            <input type="text" value={imgTitle} disabled className="textview" />
+            <label htmlFor="file" className="file_button">
+              파일 찾기
+              <input
+                type="file"
+                id="file"
+                name="profile"
+                onChange={handleFileInputChange}
+              ></input>
+            </label>
+          </JoinForm.Item.Field>
         </JoinForm.Item>
       </JoinForm>
-      <button type="button">입력 완료</button>
+      <button type="button">회원가입</button>
     </JoinPageStyled>
   );
 }
