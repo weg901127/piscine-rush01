@@ -9,13 +9,16 @@ const GlobalStyle = createGlobalStyle`
     all: unset;
     list-style: none;
   }
+
   a, button {
     cursor: pointer;
   }
+
   body, .App {
     width: 100%;
     height: 100vh;
   }
+
   #root {
     width: 100%;
     height: 100vh;
