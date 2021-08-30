@@ -12,6 +12,10 @@ const GlobalStyle = createGlobalStyle`
   a, button {
     cursor: pointer;
   }
+  body, .App {
+    width: 100%;
+    height: 100vh;
+  }
   #root {
     width: 100%;
     height: 100vh;
@@ -21,7 +25,7 @@ const GlobalStyle = createGlobalStyle`
 
 const Header = styled.header`
   text-align: center;
-  margin-bottom: 50px;
+  margin-top: 60px;
 `;
 
 function App() {
