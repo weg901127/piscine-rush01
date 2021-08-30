@@ -8,8 +8,8 @@ passport.use(new strategy({
   callbackURL: process.env.CALL_BACK_URL,
 },
   function (accessToken, refreshToken, profile, cb) {
-    console.log(profile['username']);
-    return cb(null, profile['username']);
+    console.log({ username: profile['username'], email: profile['emails'][0].value});
+    return cb(null, { username: profile['username'], email: profile.emails[0].value});
   }));
 
 passport.serializeUser(function (user, cb) {

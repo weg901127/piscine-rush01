@@ -7,8 +7,12 @@ var logger = require('morgan');
 var session = require('express-session');
 var fileStore = require('session-file-store')(session);
 var passport = require('./passportset');
-var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
-const { sequelize } = require('./models');
+//var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
+
+const {sequelize, Users} = require('./models/');
+
+const loginRouter = require('./routes/login');
+
 var app = express();
 //sequelize.authenticate().then((results) => {
 sequelize.sync().then((results) => {
@@ -16,7 +20,13 @@ sequelize.sync().then((results) => {
 }).catch((err) => {
   console.log(err);
 });
+
 // view engine setup
+// console.log(Users);
+// Users.findOne({ where: { username: "gilee" } }).then((results) => {
+//   console.log('🤬', results);
+// }).catch((err) => { console.log('' + err); });
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -27,9 +37,11 @@ app.use(cookieParser());
 app.use(session({ resave: false, saveUninitialized: false, secret: process.env.SESSION_SECRET , store: new fileStore()}));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(passport.initialize());
-app.use(passport.session());
+//app.use(passport.initialize());
+//app.use(passport.session());
 
+app.use('/login', loginRouter);
+/*
 app.get('/login',
   ensureLoggedIn('/login/42'),
   function (req, res) {
@@ -45,11 +57,11 @@ app.get('/login/42/return',
   function (req, res) {
     res.redirect('/')
   });
-
+*/
 app.get('/logout', function (req, res) {
     req.logOut();
     req.session.save(function(){
-	   res.redirect('/');
+	   res.redirect('/login');
 	})
 });
 // catch 404 and forward to error handler
