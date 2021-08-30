@@ -10,8 +10,9 @@ var passport = require('./passportset');
 var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
 const { sequelize } = require('./models');
 var app = express();
+//sequelize.authenticate().then((results) => {
 sequelize.sync().then((results) => {
-  console.log(results);
+  console.log("done");
 }).catch((err) => {
   console.log(err);
 });

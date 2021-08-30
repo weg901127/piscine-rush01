@@ -22,4 +22,7 @@ services:
       - --collation-server=utf8mb4_unicode_ci
     volumes:
       - ./mariadb:/var/lib/mysql # -v 옵션 (다렉토리 마운트 설정)
-    network_mode: "host"
+    ports:
+      - "5000:5000"
+    cap_add:
+      - SYS_NICE
