@@ -9,13 +9,16 @@ const GlobalStyle = createGlobalStyle`
     all: unset;
     list-style: none;
   }
+
   a, button {
     cursor: pointer;
   }
+
   body, .App {
     width: 100%;
     height: 100vh;
   }
+
   #root {
     width: 100%;
     height: 100vh;
@@ -35,8 +38,8 @@ function App() {
         <h1>Indian Poker</h1>
       </Header>
       <BrowserRouter>
-        <Route path="/login" exact component={LoginPage} />
-        <Route path="/join" exact component={JoinPage} />
+        <Route path="/login" component={LoginPage} />
+        <Route path="/join" component={JoinPage} />
       </BrowserRouter>
       <GlobalStyle />
     </div>
