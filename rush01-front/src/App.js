@@ -38,7 +38,7 @@ function App() {
         <h1>Indian Poker</h1>
       </Header>
       <BrowserRouter>
-        <Route path="/login" component={LoginPage} />
+        <Route path="/" exact component={LoginPage} />
         <Route path="/join" component={JoinPage} />
       </BrowserRouter>
       <GlobalStyle />
