@@ -39,8 +39,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //app.use(passport.initialize());
 //app.use(passport.session());
-
-app.use('/login', loginRouter);
+app.get('/api', (req, res) => {
+	res.json('hello');
+});
+app.use('/api/login', loginRouter);
 /*
 app.get('/login',
   ensureLoggedIn('/login/42'),
@@ -58,10 +60,10 @@ app.get('/login/42/return',
     res.redirect('/')
   });
 */
-app.get('/logout', function (req, res) {
+app.get('/api/logout', function (req, res) {
     req.logOut();
     req.session.save(function(){
-	   res.redirect('/login');
+	   res.redirect('/api/login');
 	})
 });
 // catch 404 and forward to error handler
@@ -77,7 +79,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.json(err.stack);
 });
 
 module.exports = app;
