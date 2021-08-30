@@ -4,7 +4,7 @@ import styled from "styled-components";
 const LoginPageStyled = styled.div``;
 
 function LoginPage() {
-  return <LoginPageStyled></LoginPageStyled>;
+  return <LoginPageStyled>Login Page</LoginPageStyled>;
 }
 
 export default LoginPage;
